@@ -2,10 +2,13 @@
 # exit on error
 set -o errexit
 
+# Front: compila React en dist/
 npm install
 npm run build
 
-pipenv install
+# Back: Render no trae pipenv, así que se instala con pip
+pip install --upgrade pip
+pip install -r requirements.txt
 
-pipenv run upgrade          # crea / actualiza las tablas en Supabase
-pipenv run flask seed       # crea el super admin la primera vez
+flask db upgrade     # crea / actualiza las tablas en Supabase
+flask seed           # crea el super admin la primera vez

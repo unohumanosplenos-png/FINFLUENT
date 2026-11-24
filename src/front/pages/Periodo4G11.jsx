@@ -2423,7 +2423,7 @@ const MILL_LV = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3];
 const MILL_PRIZE = [100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000, 20000000, 50000000, 100000000, 250000000, 1000000000];
 const MILL_SAFE = [3, 7];
 const bigCOP = (v) => (v >= 1000000000 ? "$1,000 MILLION" : v >= 1000000 ? `$${(v / 1000000).toLocaleString("en-US")} million` : cop(v));
-function Millionaire({ ctx, existing, onSave, onExit }) {
+export function Millionaire({ ctx, existing, onSave, onExit, demo }) {
   const bank = useBank(ctx);
   const [lvl, setLvl] = useState(0);
   const [q, setQ] = useState(null);
@@ -2445,7 +2445,7 @@ function Millionaire({ ctx, existing, onSave, onExit }) {
   if (st.done) return <Reward title="Millionaire mind! 💰" subtitle={`Best: level ${best}/12`} coins={st.coins} saving={st.saving} onExit={onExit} gold={best >= 12} />;
   return (
     <ActShell icon={<Crown size={22} strokeWidth={2.1} />} title="Who Wants to Be a FinFluent Millionaire? 💰" subtitle="12 questions from 6° to 11°. 3 lifelines. Safe levels at $1 million and $20 million. Walk away whenever you want." onExit={onExit}>
-      <Brief91 k="c1_mill" />
+      {!demo && <Brief91 k="c1_mill" />}
       <div className="g11-mill">
         <div className="g11-ladder">{MILL_PRIZE.map((p, k) => k).reverse().map((k) => <div key={k} className={`${k === lvl && q && !end ? "on" : ""} ${k < lvl || (end && k < end.levels) ? "done" : ""} ${MILL_SAFE.includes(k) ? "safe" : ""}`}><span>{k + 1}</span><b>{bigCOP(MILL_PRIZE[k])}</b></div>)}</div>
         <div className="g11-mill-main">

@@ -129,6 +129,9 @@ class User(db.Model):
     last_login: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    # Términos y tratamiento de datos: cuándo aceptó y qué versión del texto
+    terms_accepted_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True)
+    terms_version: Mapped[str] = mapped_column(String(20), default="", server_default="", nullable=False)
 
     school = relationship("School", back_populates="users")
     progress = relationship("Progress", back_populates="user", cascade="all, delete-orphan")
@@ -148,6 +151,8 @@ class User(db.Model):
             "Fecha_Ultimo_Login": iso(self.last_login),
             "Activo": self.is_active,
             "school_id": self.school_id,
+            "Terminos_Aceptados": iso(self.terms_accepted_at),
+            "Terminos_Version": self.terms_version or "",
         }
 
 

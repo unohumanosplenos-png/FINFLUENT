@@ -14,6 +14,7 @@ import { CATALOG } from "../activityCatalog";
 import "../Styles/dashboard.css";
 import "../Styles/platform.css";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { TermsModal } from "../components/TermsModal";
 
 /* =====================================================================
    PÁGINAS DE CADA PERIODO (se descargan solo cuando el estudiante las abre:
@@ -762,6 +763,8 @@ export const Dashboard = ({ onLogout }) => {
   const currentIdx = Math.max(0, states.findIndex((s) => !s.done));
   const allDone = periods.length > 0 && states.every((s) => s.done);
   const current = periods[allDone ? periods.length - 1 : currentIdx];
+  // El super admin no acepta términos; estudiantes y admins de colegio sí (y otra vez si cambia la versión)
+  const needsTerms = !isSuper && !!userData.Terminos_Vigentes && userData.Terminos_Version !== userData.Terminos_Vigentes;
   const firstName = userData.Nombre_Completo?.split(" ")[0] || "there";
   const roleLabel = isSuper ? "Super admin" : isAdmin ? "Admin" : `Grade ${grade}`;
   const openPeriodDef = periods.find((p) => p.key === activeTab);
@@ -772,6 +775,18 @@ export const Dashboard = ({ onLogout }) => {
 
   return (
     <div className={`fin-dash ${navOpen ? "nav-open" : ""}`}>
+      {/* Términos y tratamiento de datos: obligatorio antes de usar la plataforma */}
+      {needsTerms && (
+        <TermsModal
+          version={userData.Terminos_Vigentes}
+          schoolName={school?.name}
+          onLogout={handleLogout}
+          onAccepted={(res) => {
+            const next = { ...userData, ...res, token: userData.token };
+            setSession(next); setUserData(next);
+          }}
+        />
+      )}
       <SyncBadge sync={store.sync} />
       <RotateHint />
       {/* barra superior móvil */}

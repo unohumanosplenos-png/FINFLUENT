@@ -85,6 +85,7 @@ def admin_students(user):
         out.append({
             "id": s.id, "key": s.student_key, "name": s.full_name, "email": s.email, "group": s.group_name,
             "grade": s.grade, "active": s.is_active, "lastLogin": iso(s.last_login), "streak": s.streak_days,
+            "terms": iso(s.terms_accepted_at) if s.terms_version else None,
             "overall": round(sum((periods.get(k) or {}).get("Porcentaje", 0) for k in keys) / len(keys)),
             "periods": periods,
         })

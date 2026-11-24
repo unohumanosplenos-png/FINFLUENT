@@ -4,6 +4,7 @@
 
    POST /api/auth/login          usuario + contraseña -> token + perfil
    GET  /api/auth/me             perfil actualizado (y colegio)
+   POST /api/auth/accept-terms   acepta términos y tratamiento de datos
    GET  /api/progress            progreso del estudiante (?period=P1 &light=1)
    POST /api/progress            guarda una fila (upsert + MERGE, nunca borra)
    GET  /api/health              para despertar / monitorear el servidor
@@ -26,6 +27,11 @@ from api.utils import APIException
 api = Blueprint('api', __name__)
 CORS(api)
 
+# Versión vigente de los términos. Si cambias el texto de la ventana de términos
+# (src/front/components/TermsModal.jsx), sube esta versión: todos los usuarios
+# tendrán que aceptarlos otra vez la próxima vez que entren.
+TERMS_VERSION = "2026-11"
+
 # Las 6 semanas del curso demo original (se conservan por compatibilidad)
 WEEK_TOTALS = {"1": 6, "2": 6, "3": 8, "4": 7, "5": 7, "6": 7}
 
@@ -37,6 +43,7 @@ def body():
 def profile_payload(user):
     data = user.serialize()
     data["School"] = user.school.serialize_public() if user.school else None
+    data["Terminos_Vigentes"] = TERMS_VERSION
     return data
 
 
@@ -75,6 +82,23 @@ def login():
 @api.route('/auth/me', methods=['GET'])
 @auth_required()
 def me(user):
+    out = profile_payload(user)
+    out["status"] = "success"
+    return jsonify(out), 200
+
+
+@api.route('/auth/accept-terms', methods=['POST'])
+@auth_required()
+def accept_terms(user):
+    """El usuario aceptó términos y tratamiento de datos (versión vigente)."""
+    p = body()
+    if str(p.get("version") or "") != TERMS_VERSION:
+        raise APIException("The terms changed. Reload the page and read them again.", 409)
+    if not (p.get("data") and p.get("content")):
+        raise APIException("Check both boxes to continue.", 400)
+    user.terms_accepted_at = utcnow()
+    user.terms_version = TERMS_VERSION
+    db.session.commit()
     out = profile_payload(user)
     out["status"] = "success"
     return jsonify(out), 200

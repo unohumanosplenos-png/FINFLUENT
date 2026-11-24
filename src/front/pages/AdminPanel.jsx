@@ -330,6 +330,9 @@ function StudentDetail({ s, keys, course, schoolId, onBack, onChanged }) {
           <p>Usuario: <b>{s.key}</b> · Grado {s.grade}{s.course ? ` · Curso ${s.course}` : ""} · Último ingreso: {fmtDate(s.lastLogin)}</p>
           <span className={`adm-status ${s.status}`}>{STATUS[s.status].label}</span>
           {!s.active && <span className="adm-status never">Pausado</span>}
+          <span className={`adm-status ${s.terms ? "terms-ok" : "terms-no"}`}>
+            {s.terms ? `Aceptó términos · ${fmtDate(s.terms)}` : "No ha aceptado términos"}
+          </span>
         </div>
         <div className="adm-student-kpis">
           <span><b>{s.overall}%</b>Año</span>
@@ -508,12 +511,12 @@ export const AdminPanel = ({ schoolId = null, schoolName = "", onExit = null }) 
     quizCols.sort((a, b) => keys.indexOf(a.period) - keys.indexOf(b.period));
     const pn = (k) => `P${keys.indexOf(k) + 1}`;
     const header = [
-      "Usuario", "Nombre", "Grado", "Curso", "Estado", "Último ingreso", "Progreso del año %", "Periodos completos", "XP total",
+      "Usuario", "Nombre", "Grado", "Curso", "Estado", "Aceptó términos", "Último ingreso", "Progreso del año %", "Periodos completos", "XP total",
       ...keys.flatMap((k) => [`${pn(k)} %`, `${pn(k)} XP`]),
       ...quizCols.map((c) => `${pn(c.period)} ${actTitle(c.period, c.key)} (%)`),
     ];
     const rows = list.map((s) => [
-      s.key, s.name, s.grade, s.course, STATUS[s.status].label, s.lastLogin ? fmtDate(s.lastLogin) : "Nunca",
+      s.key, s.name, s.grade, s.course, STATUS[s.status].label, s.terms ? fmtDate(s.terms) : "No", s.lastLogin ? fmtDate(s.lastLogin) : "Nunca",
       s.overall, s.done, s.xp,
       ...keys.flatMap((k) => [Math.round(num(s.weeks[k]?.Porcentaje)), rowXP(s.weeks[k])]),
       ...quizCols.map((c) => { const q = s.quizzes.find((x) => x.period === c.period && x.key === c.key); return q ? q.pct : ""; }),
@@ -641,7 +644,7 @@ export const AdminPanel = ({ schoolId = null, schoolName = "", onExit = null }) 
               <tbody>
                 {list.map((s) => (
                   <tr key={s.id} onClick={() => setSelectedId(s.id)} className={s.active ? "" : "paused"}>
-                    <td><div className="adm-name"><b>{s.name}</b><small>{s.key}{!s.active ? " · pausado" : ""}</small></div></td>
+                    <td><div className="adm-name"><b>{s.name}</b><small>{s.key}{!s.active ? " · pausado" : ""}{!s.terms && s.lastLogin ? " · sin aceptar términos" : ""}</small></div></td>
                     <td className="c adm-num">{s.course || "—"}</td>
                     <td><span className={`adm-status ${s.status}`}>{STATUS[s.status].label}</span></td>
                     <td className="adm-login">{timeAgo(s.lastLogin)}</td>

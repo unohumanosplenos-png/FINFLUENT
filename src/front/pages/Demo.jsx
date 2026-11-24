@@ -19,7 +19,7 @@ import { CrashSurvival } from "./Periodo3G11";
 
 // Pon aquí tu WhatsApp para que los colegios te escriban desde el diploma.
 // Formato: código de país + número, sin "+" ni espacios. Ej.: "573001234567"
-const CONTACT_WHATSAPP = "";
+const CONTACT_WHATSAPP = "+573173769865";
 
 const MISSIONS = [
   {

@@ -93,6 +93,11 @@ export const Home = ({ onLoginSuccess }) => {
   // Si ya hay sesión, directo al dashboard. Si venció, abrimos el login con el aviso.
   useEffect(() => {
     if (getSession()?.token) { navigate("/dashboard", { replace: true }); return; }
+    if (new URLSearchParams(window.location.search).get("login")) {
+      setView("login");
+      window.history.replaceState({}, "", window.location.pathname);
+      return;
+    }
     if (new URLSearchParams(window.location.search).get("expired")) {
       setView("login");
       setError("Your session expired. Log in again to continue where you left off.");
@@ -179,6 +184,9 @@ export const Home = ({ onLoginSuccess }) => {
               </button>
             </form>
             <p className="login-help">Forgot your password? Ask your teacher to reset it.</p>
+            <button type="button" className="login-demo" onClick={() => navigate("/demo")}>
+              <Gamepad2 size={16} strokeWidth={2.4} /> No account? Play the free demo
+            </button>
           </div>
         </div>
       </div>
@@ -197,7 +205,10 @@ export const Home = ({ onLoginSuccess }) => {
           <a href="#games">Games</a>
           <a href="#schools">For schools</a>
         </div>
-        <button className="btn-login-nav" onClick={() => setView("login")}>Log in</button>
+        <div className="fin-nav-cta">
+          <button className="btn-demo-nav" onClick={() => navigate("/demo")}><Gamepad2 size={16} strokeWidth={2.4} /> Try the demo</button>
+          <button className="btn-login-nav" onClick={() => setView("login")}>Log in</button>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -212,7 +223,7 @@ export const Home = ({ onLoginSuccess }) => {
             </p>
             <div className="hero-cta-row">
               <button className="btn-primary" onClick={() => setView("login")}>Log in to my course</button>
-              <a href="#route" className="btn-ghost">See the six grades <ArrowRight size={16} strokeWidth={2.4} /></a>
+              <button className="btn-ghost" onClick={() => navigate("/demo")}><Gamepad2 size={17} strokeWidth={2.4} /> Play the free demo <ArrowRight size={16} strokeWidth={2.4} /></button>
             </div>
           </div>
 
@@ -512,7 +523,10 @@ export const Home = ({ onLoginSuccess }) => {
             <h2>Ready for your next period?</h2>
             <p>Log in with your username, open your grade and pick up exactly where you left off.</p>
           </div>
-          <button className="btn-primary" onClick={() => setView("login")}>Log in</button>
+          <div className="cta-btns">
+            <button className="btn-primary" onClick={() => setView("login")}>Log in</button>
+            <button className="btn-ghost" onClick={() => navigate("/demo")}><Gamepad2 size={17} strokeWidth={2.4} /> Try the demo</button>
+          </div>
         </div>
       </section>
 

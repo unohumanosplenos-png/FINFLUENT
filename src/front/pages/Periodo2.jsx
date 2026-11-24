@@ -1945,7 +1945,7 @@ const TEMPTATIONS = [
   { e: "🍬", n: "Candy", p: 3000 }, { e: "🎮", n: "A game skin", p: 8000 }, { e: "🧋", n: "Bubble tea", p: 6000 }, { e: "✨", n: "Stickers", p: 4000 },
   { e: "🍔", n: "A burger", p: 9000 }, { e: "🎧", n: "Cheap earbuds", p: 10000 }, { e: "🍦", n: "Ice cream", p: 3000 }, { e: "🃏", n: "Trading cards", p: 5000 },
 ];
-function WaitGame({ onSave, onExit }) {
+export function WaitGame({ onSave, onExit }) {
   const GOAL = 60000, INCOME = 10000, WEEKS = 8;
   const deck = useMemo(() => shuffleArr(TEMPTATIONS), []);
   const [week, setWeek] = useState(0);

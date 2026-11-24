@@ -977,7 +977,7 @@ const CHAIN_LEVELS = [
   ] },
 ];
 
-function ChainMarket({ onSave, onExit }) {
+export function ChainMarket({ onSave, onExit }) {
   const [lvl, setLvl] = useState(0);
   const level = CHAIN_LEVELS[lvl];
   const traders = useMemo(() => shuffleArr(CHAIN_LEVELS[lvl].traders), [lvl]);
@@ -1201,7 +1201,7 @@ const COINS_CO = [
   { id: "c500", kind: "coin", value: 500, animal: "glass frog", fact: "You can see inside the body of a glass frog!" },
   { id: "c1000", kind: "coin", value: 1000, animal: "sea turtle", fact: "The loggerhead sea turtle swims in the Caribbean Sea." },
 ];
-const ROOMS = [
+export const ROOMS = [
   { id: "explore", name: "Explore the Museum", e: "🔎", badge: "Banknote Detective" },
   { id: "flip", name: "Flip & Discover", e: "🃏", badge: "Memory Keeper" },
   { id: "build", name: "Build the Banknote", e: "🧩", badge: "Biodiversity Expert" },
@@ -1389,7 +1389,7 @@ function RoomBuild({ room, onDone, onExit }) {
 
 /* Sala 4 · mercado: pagar exacto, cambio y decidir */
 const START_WALLET = [5000, 2000, 2000, 1000, 1000, 500, 500];
-function RoomRush({ room, onDone, onExit }) {
+export function RoomRush({ room, onDone, onExit }) {
   const [wallet, setWallet] = useState(() => START_WALLET.map((v, i) => ({ v, id: i })));
   const [tray, setTray] = useState([]);
   const [step, setStep] = useState(0);

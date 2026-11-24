@@ -2946,7 +2946,7 @@ const CRASH = {
   "2008": { l: "Global Financial Crisis · 2008–2009", m: ["Jan 08", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan 09", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], r: [-6.1, -3.5, -0.6, 4.8, 1.1, -8.6, -1.0, 1.2, -9.1, -16.9, -7.5, 0.8, -8.6, -11.0, 8.5, 9.4, 5.3, 0.0, 7.4, 3.4, 3.6, -2.0, 5.7, 1.8] },
   "2020": { l: "COVID crash · 2020", m: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], r: [-0.2, -8.4, -12.5, 12.7, 4.5, 1.8, 5.5, 7.0, -3.9, -2.8, 10.8, 3.7] },
 };
-function CrashSurvival({ existing, onSave, onExit }) {
+export function CrashSurvival({ existing, onSave, onExit, demo }) {
   const [c, setC] = useState(null);
   const [i, setI] = useState(0);
   const [inv, setInv] = useState(10000000);
@@ -2961,16 +2961,16 @@ function CrashSurvival({ existing, onSave, onExit }) {
   if (st.done) return <Reward title="You survived the crash! 🌪️" subtitle={`You: ${mCOP(inv + cash)} · just holding: ${mCOP(hold)}`} coins={st.coins} saving={st.saving} onExit={onExit} />;
   return (
     <ActShell icon={<TrendingDown size={22} strokeWidth={2.1} />} title="Crash Survival 🌪️" subtitle="$10,000,000 in an S&P 500 ETF. Live a real crash month by month: hold, sell — or buy back." onExit={onExit}>
-      <Brief91 k="c6_crash" /><Guide11 {...GD3_CRASH} />
+      {!demo && <Brief91 k="c6_crash" />}<Guide11 {...GD3_CRASH} />
       {!C ? <div className="g10-ab four">{Object.entries(CRASH).map(([k, x]) => <button key={k} type="button" onClick={() => setC(k)}><em>{k === "2008" ? "🏦" : "🦠"}</em><b>{x.l}</b><span>{x.r.length} months</span></button>)}</div> : (
         <>
           <div className="g10-kpis"><div><small>📈 In the ETF</small><b>{mCOP(inv)}</b></div><div><small>💵 In cash</small><b>{mCOP(cash)}</b></div><div><small>💼 Total</small><b className={inv + cash >= 10000000 ? "pos" : "neg"}>{mCOP(inv + cash)}</b></div></div>
           {!done ? <div className="start-block g10-event"><div className="g10-event-head"><em>📅</em><div><b>{C.m[i]} · {C.l}</b><p>{i > 0 ? `Last month: ${pctTxt(C.r[i - 1], 1)}. ` : ""}What do you do BEFORE this month?</p></div></div><div className="g10-ab four"><button type="button" onClick={() => act("hold")}><em>🧘</em><b>Hold</b></button><button type="button" disabled={!inv} onClick={() => act("sell")}><em>🏃</em><b>Sell all</b></button><button type="button" disabled={!cash} onClick={() => act("buy")}><em>🛒</em><b>Buy back</b></button></div></div> : <div className={`p1-banner ${inv + cash >= hold * 0.98 ? "good" : "bad"}`}><span>End: you {mCOP(inv + cash)} vs. just holding {mCOP(hold)}. {inv + cash < hold * 0.98 ? "Panic decisions cost money." : hist.some((x) => x.d === "sell") ? "This time your timing worked — but nobody can predict the bottom every time." : "Discipline paid."} (Approximate monthly S&P 500 price changes.)</span></div>}
           {hist.length > 1 && <ChartCard title="Your portfolio month by month"><LineChart labels={hist.map((x) => x.m)} series={[{ name: "You", values: hist.map((x) => Math.round(x.v)), color: "#e0a03a" }]} /></ChartCard>}
-          {done && <div className="start-block"><h3>✍️ What I felt and learned</h3><WordField value={text} onChange={setText} min={30} max={80} goals={G} placeholder="In October I panicked and sold because the market fell 17%… Holding would have…" /></div>}
+          {done && !demo && <div className="start-block"><h3>✍️ What I felt and learned</h3><WordField value={text} onChange={setText} min={30} max={80} goals={G} placeholder="In October I panicked and sold because the market fell 17%… Holding would have…" /></div>}
         </>
       )}
-      {done && <div className="start-foot"><button className="s1-btn primary big" disabled={!goalsOk(text, 30, 80, G)} onClick={() => finish(26 + (inv + cash >= hold * 0.98 ? 6 : 0), { crash: c, final: Math.round(inv + cash), hold: Math.round(hold), text })}>Save my crash report <span className="coin-tag"><Coins size={15} /> +{26 + (inv + cash >= hold * 0.98 ? 6 : 0)}</span></button></div>}
+      {done && <div className="start-foot"><button className="s1-btn primary big" disabled={!demo && !goalsOk(text, 30, 80, G)} onClick={() => finish(26 + (inv + cash >= hold * 0.98 ? 6 : 0), { crash: c, final: Math.round(inv + cash), hold: Math.round(hold), text })}>Save my crash report <span className="coin-tag"><Coins size={15} /> +{26 + (inv + cash >= hold * 0.98 ? 6 : 0)}</span></button></div>}
     </ActShell>
   );
 }

@@ -1,0 +1,138 @@
+/* =====================================================================
+   FINFLUENT · DEMO (usa los tokens de dashboard.css)
+   ===================================================================== */
+.demo { min-height: 100vh; background: var(--bg); font-family: var(--font-body); color: var(--ink); padding-bottom: 60px; }
+
+/* barra superior */
+.demo-top {
+  position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px clamp(16px, 4vw, 40px); background: rgba(255, 255, 255, .86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.demo-logo { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-size: 1.15rem; }
+.demo-logo b { color: var(--green-deep); font-weight: 800; }
+.demo-logo-mark { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--forest); color: var(--gold); }
+.demo-logo em { font-style: normal; font-family: var(--font-body); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; background: var(--gold); color: var(--forest); padding: 3px 8px; border-radius: 999px; }
+.demo-top-actions { display: flex; align-items: center; gap: 8px; }
+.demo-link { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); text-decoration: none; font-weight: 700; font-size: .9rem; padding: 8px 10px; }
+.demo-link:hover { color: var(--green-deep); }
+.demo-login { text-decoration: none; background: var(--forest); color: #fff; font-weight: 800; font-size: .9rem; padding: 9px 18px; border-radius: 10px; }
+.demo-login:hover { background: var(--green-deep); color: #fff; }
+
+/* encabezado */
+.demo-hero {
+  max-width: 1180px; margin: clamp(18px, 3vw, 32px) auto 0; padding: clamp(24px, 4vw, 44px); border-radius: 28px;
+  display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center;
+  color: #fff; background: linear-gradient(150deg, var(--forest), #0f3d2c 60%, #14523a); position: relative; overflow: hidden;
+  margin-left: clamp(12px, 3vw, 40px); margin-right: clamp(12px, 3vw, 40px);
+}
+@media (min-width: 1260px) { .demo-hero { margin-left: auto; margin-right: auto; } }
+.demo-hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(460px 260px at 92% -10%, rgba(245, 178, 62, .32), transparent 62%); pointer-events: none; }
+.demo-hero-copy { position: relative; }
+.demo-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .2); border-radius: 999px; padding: 6px 13px; font-weight: 700; font-size: .82rem; margin-bottom: 16px; }
+.demo-badge svg { color: var(--gold); }
+.demo-hero h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; line-height: 1.02; font-size: clamp(2rem, 4.6vw, 3.3rem); margin: 0 0 14px; }
+.demo-hero h1 span { color: var(--gold); }
+.demo-hero p { color: var(--mint); max-width: 60ch; line-height: 1.55; font-weight: 500; margin: 0 0 10px; font-size: 1.04rem; }
+.demo-hero .demo-es { color: rgba(255, 255, 255, .55); font-size: .86rem; margin: 0; }
+.demo-score { position: relative; width: 210px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.demo-score small { color: rgba(255, 255, 255, .6); font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+.demo-score b { font-family: var(--font-display); font-weight: 800; font-size: 3rem; line-height: 1; }
+.demo-score b i { font-style: normal; color: rgba(255, 255, 255, .45); font-size: 1.6rem; }
+.demo-score-bar { height: 9px; border-radius: 999px; background: rgba(255, 255, 255, .14); overflow: hidden; }
+.demo-score-bar u { display: block; height: 100%; background: var(--gold); border-radius: 999px; transition: width .6s ease; }
+.demo-score span { display: inline-flex; align-items: center; gap: 6px; color: var(--gold); font-weight: 800; }
+
+/* tarjetas de misiones */
+.demo-grid {
+  max-width: 1180px; margin: 22px auto 0; padding: 0 clamp(12px, 3vw, 40px);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+@media (min-width: 1260px) { .demo-grid { padding: 0; } }
+.demo-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow-sm); transition: transform .15s ease, border-color .15s ease; }
+.demo-card:hover { transform: translateY(-3px); border-color: var(--green); }
+.demo-card.ok { border-color: var(--green-deep); background: linear-gradient(180deg, rgba(22, 176, 116, .07), var(--surface) 55%); }
+.demo-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.demo-n { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: var(--bg-2); font-weight: 800; font-size: .88rem; }
+.demo-card.ok .demo-n { background: var(--green-deep); color: #fff; }
+.demo-grade { font-size: .74rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--green-deep); background: rgba(22, 176, 116, .12); border-radius: 999px; padding: 4px 9px; }
+.demo-time { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: .78rem; font-weight: 700; }
+.demo-emoji { font-style: normal; font-size: 2.6rem; line-height: 1.1; margin: 4px 0; }
+.demo-card h3 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 1.28rem; letter-spacing: -.015em; }
+.demo-period { color: var(--muted); font-weight: 700; font-size: .8rem; }
+.demo-card p { color: var(--ink-soft); line-height: 1.5; font-size: .93rem; margin: 6px 0 14px; flex: 1; }
+.demo-card .s1-btn { width: 100%; }
+
+/* bloque del diploma */
+.demo-finish {
+  max-width: 1180px; margin: 16px auto 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: var(--surface); border: 2px dashed var(--rule); border-radius: 22px; padding: 18px 22px;
+  margin-left: clamp(12px, 3vw, 40px); margin-right: clamp(12px, 3vw, 40px);
+}
+@media (min-width: 1260px) { .demo-finish { margin-left: auto; margin-right: auto; } }
+.demo-finish.on { border-style: solid; border-color: var(--gold); background: var(--note); }
+.demo-finish-ico { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; background: var(--bg-2); color: var(--muted); flex-shrink: 0; }
+.demo-finish.on .demo-finish-ico { background: var(--gold); color: var(--forest); }
+.demo-finish-copy { flex: 1; min-width: 200px; }
+.demo-finish h3 { margin: 0 0 2px; font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; }
+.demo-finish p { margin: 0; color: var(--ink-soft); font-weight: 500; }
+.demo-finish-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.demo-finish-form input { min-width: 230px; border: 1.5px solid var(--line); border-radius: 11px; padding: 11px 13px; font: inherit; font-weight: 600; background: #fff; color: var(--ink); }
+.demo-finish-form input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(22, 176, 116, .16); }
+
+/* juego abierto */
+.demo-playing { max-width: 960px; margin: 0 auto; padding: 18px clamp(12px, 3vw, 32px) 0; }
+.demo-crumb { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.demo-crumb button { display: inline-flex; align-items: center; gap: 7px; background: none; border: none; cursor: pointer; color: var(--ink-soft); font-weight: 700; font-size: .92rem; padding: 6px 0; }
+.demo-crumb button:hover { color: var(--green-deep); }
+.demo-crumb span { color: var(--muted); font-weight: 600; font-size: .88rem; }
+.demo-crumb span b { color: var(--green-deep); }
+.demo-win { text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: clamp(28px, 5vw, 48px); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.demo-win > span { font-size: 3.4rem; }
+.demo-win h2 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 2rem; }
+.demo-win p { margin: 0 0 6px; color: var(--ink-soft); max-width: 44ch; line-height: 1.5; }
+.coin-tag.big { font-size: 1.1rem; padding: 8px 16px; margin-bottom: 8px; }
+
+/* diploma */
+.demo-cert-wrap { max-width: 860px; margin: 26px auto 0; padding: 0 clamp(12px, 3vw, 24px); }
+.demo-cert {
+  position: relative; text-align: center; background: #fffdf6; color: #14271e; border-radius: 22px;
+  padding: clamp(28px, 6vw, 56px) clamp(20px, 6vw, 60px); border: 2px solid #072a1e; outline: 6px solid #fffdf6; box-shadow: 0 0 0 9px #f5b23e, var(--shadow-lg);
+  margin: 9px;
+}
+.demo-cert-top { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 18px; }
+.demo-cert-top b { color: #0b7a50; }
+.demo-cert-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: #072a1e; color: #f5b23e; }
+.demo-cert-kicker { display: block; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; font-size: .76rem; color: #8a6a1b; }
+.demo-cert h1 { margin: 6px 0 14px; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 6vw, 3.4rem); letter-spacing: -.03em; color: #072a1e; line-height: 1; }
+.demo-cert-lead { margin: 0; color: #4b5d54; font-weight: 600; }
+.demo-cert h2 { margin: 8px auto 12px; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 4.4vw, 2.3rem); color: #0b7a50; border-bottom: 2px solid #f5b23e; display: inline-block; padding: 0 14px 6px; }
+.demo-cert ul { list-style: none; margin: 18px auto 22px; padding: 0; max-width: 560px; text-align: left; display: flex; flex-direction: column; gap: 9px; }
+.demo-cert li { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; line-height: 1.4; color: #24382f; }
+.demo-cert li svg { flex-shrink: 0; margin-top: 2px; color: #0b7a50; }
+.demo-cert-foot { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.demo-cert-foot div { min-width: 110px; padding: 10px 14px; border-radius: 14px; background: #072a1e; color: #fff; display: flex; flex-direction: column; }
+.demo-cert-foot b { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: #f5b23e; line-height: 1.1; }
+.demo-cert-foot span { font-size: .74rem; font-weight: 700; color: #bdeed7; text-transform: uppercase; letter-spacing: .04em; }
+.demo-cert-note { margin: 0; color: #6b7a72; font-size: .86rem; font-weight: 500; }
+.demo-cert-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.demo-cert-actions a.s1-btn { text-decoration: none; }
+
+@media (max-width: 1040px) { .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) {
+  .demo-hero { grid-template-columns: 1fr; }
+  .demo-score { width: 100%; }
+  .demo-link { display: none; }
+}
+@media (max-width: 540px) {
+  .demo-grid { grid-template-columns: 1fr; }
+  .demo-finish-form, .demo-finish-form input { width: 100%; min-width: 0; }
+  .demo-finish-form .s1-btn { width: 100%; }
+}
+
+/* imprimir solo el diploma */
+@media print {
+  .demo-top, .demo-cert-actions { display: none !important; }
+  .demo { background: #fff; padding: 0; }
+  .demo-cert { box-shadow: none; margin: 0; }
+}
